@@ -159,7 +159,7 @@ hr {
     font-size: .85em;  
 }
 
-blockquote[id^=twitter-tweet] {
+div[id^=tweet_] {
     display: inline-block;
     padding: 1em;
     margin: 0 0 1em;
@@ -209,11 +209,8 @@ div[id^=search_]{
   margin-left: 15px;
 
 }
-input[id^=deletebutton_]{
+input[id^=deleteSearch_]{
     margin-left: 0px;
     position: relative;
     top: 2px;
-
-
-
 }

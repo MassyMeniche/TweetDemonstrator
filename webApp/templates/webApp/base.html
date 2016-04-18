@@ -25,12 +25,7 @@
             </br>
                 {% for s in searches%}
                  <div id='search_{{ forloop.counter }}'>
-                    <input id='deletebutton_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" alt="Submit" type="image">
-                    <script>
-                        $( "#deletebutton_{{ forloop.counter }}" ).click(function() {
-                          $( "#search_{{ forloop.counter }}").remove();
-                        });
-                    </script>
+                    <input id='deleteSearch_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteSearch()">
                     <a href="{% url 'Result' pk=s.pk %}"> {{s}} </a>
                  </div>   
                 {% endfor %}

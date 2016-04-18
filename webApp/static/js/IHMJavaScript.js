@@ -1,8 +1,4 @@
-/**
- * File: js/showhide.js
- * Author: design1online.com, LLC
- * Purpose: toggle the visibility of fields depending on the value of another field
- **/
+
 $(document).ready(function () {
     toggleFields(); //call this first so we start out with the correct visibility depending on the selected form values
     //this will call our toggleFields function every time the selection value of our underAge field changes
@@ -23,4 +19,16 @@ function toggleFields() {
     	$("#rowofraduis").hide();
     }
         
+}
+function deleteSearch(){
+    var buttonId=event.target.id;
+    searchId='#search'.concat(buttonId.substr(12));
+    console.log(searchId)
+    $(searchId).remove();
+}
+function deleteTweet(){
+    var buttonId=event.target.id;
+    tweetId='#tweet'.concat(buttonId.substr(10));
+    console.log(tweetId)
+    $(tweetId).hide();
 }

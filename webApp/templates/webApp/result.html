@@ -4,12 +4,14 @@
     <div class='result-Container'> 
         <div class="tweets"> 
             {% for tweet in tweets %}
-                <input id='deletebutton_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" alt="Submit" type="image">
+            <div id='tweet_{{ forloop.counter }}'>
+                <input id='deletTweet_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteTweet()">
                     <blockquote class="twitter-tweet">
                         &mdash; 
                         <a href='{{tweet.getUrl}}'> </a>
                     </blockquote> 
                     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
             {% endfor %}
         </div>  
     </div> 
