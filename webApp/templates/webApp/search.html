@@ -1,0 +1,43 @@
+{% extends 'webApp/base.html' %}
+{% block content %}
+<div id="container">		
+	<form method="POST" class="search-form"> {% csrf_token %}
+		<div class="row">
+			  	<label class="nameoffield" for="field">Mots-clés*:</label> 
+			  	<br />
+			<input class="field" maxlength="100" name="keywords" type="text">
+	    </div>
+	    <br />
+	    <div class="rowOfActivateLocation">
+	    	<input id="id_activateLocation"  type="checkbox" name="activatelocation" >
+	    	<label class="headofAL" for="field">Activer la localisation</label>
+		    
+	    </div>
+	    <br />
+    	<div id= 'location'>
+	        <label class="nameoffield" for="id_location">Lieu:</label>
+	       	<input class="field" maxlength="100" name="location" type="text">
+	     </div>  	
+	     <br />
+	     <div id="rowofraduis">
+	       	<label class="nameofradiusfield" for="locationRadius">Rayon de recherche: </label>
+			<select name="locationRadius",class="radiusmenu">
+			<option value="1km">1Km</option>
+			<option value="2km">2Km</option>
+			<option value="3km">3Km</option>
+			<option value="4km">4Km</option>
+			<option value="5km">5Km</option>
+
+			</select>
+		</div>
+		<br/>
+	    
+	    <div class="recherche"><button type="submit" >Recherche</button></div>
+	    <br />
+	    <div class= 'legende'>*.(et),+(ou),-(sans)</div> 
+	</form>
+</div>
+{% endblock %}
+
+
+

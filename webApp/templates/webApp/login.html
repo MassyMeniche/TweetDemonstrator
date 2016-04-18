@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <link rel="stylesheet" type="text/css" href="../static/css/mainStyle.css" media="screen" />
+        <title>Connection</title>
+    </head>
+
+    <body>
+        <div class="background-image"></div>
+        <div id="container">  
+            <form method="POST" class="search-form"  >
+                {% csrf_token %}
+                <div class="row">
+                   <label class="nameoffield" for="id_keywords">Nom d'utilisateur:</label>
+
+                    <input class="field" type="text" name="username"  size="50" />
+                </div>
+                <br />
+                <div class="row"> 
+                     <label class="nameoffield" for="id_keywords">Mot de passe:</label> 
+
+                    <input class="field" type="password" name="password" size="50" />
+                </div>
+                <br />
+                <div class="recherche"><button type="submit" >Se connecter</button></div>
+            </form>
+        </div>
+    </body>
+</html>
