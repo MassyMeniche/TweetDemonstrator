@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/mainStyle.css' %}" media="screen" />
         <script src="{% static "js/jquery-2.2.3.min.js" %}"></script>
         <script src="{% static "js/IHMJavaScript.js" %}"></script>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         <title>Recherche</title>
 	</head>
 	<body>   
@@ -25,7 +26,9 @@
             </br>
                 {% for s in searches%}
                  <div id='search_{{ forloop.counter }}'>
+
                     <input id='deleteSearch_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteSearch()">
+
                     <a href="{% url 'Result' pk=s.pk %}"> {{s}} </a>
                  </div>   
                 {% endfor %}

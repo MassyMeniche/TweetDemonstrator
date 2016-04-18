@@ -30,5 +30,5 @@ function deleteTweet(){
     var buttonId=event.target.id;
     tweetId='#tweet'.concat(buttonId.substr(10));
     console.log(tweetId)
-    $(tweetId).hide();
+    $(tweetId).remove();
 }
