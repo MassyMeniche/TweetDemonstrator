@@ -27,7 +27,7 @@ class RawTweet(models.Model):
 	images = models.ImageField(upload_to = 'images/', blank=True)
 	isretweeted = models.NullBooleanField()
 	hashtags = models.CharField(max_length = 100)
-	score=models.PositiveSmallIntegerField(default=0)
+	score=models.IntegerField(default=0)
 
 
 	def __str__(self):

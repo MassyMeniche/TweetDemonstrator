@@ -5,5 +5,4 @@ urlpatterns=[
 	url(r'^recherche/(?P<pk>\d+)/$',views.Result_view,name='Result'),
 	url(r'^login', views.user_login_view, name='login'),
 	url(r'^logout', views.user_logout_view, name='logout'),
-	url(r'^test', views.test, name='test'),
 ]
