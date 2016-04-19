@@ -161,11 +161,12 @@ hr {
 
 div[id^=tweet_] {
     display: inline-block;
-    padding: 1em;
-    margin: 0 0 1em;
+    padding: 0px;
+    margin: 0px;
     width: 100%;
     
 }
+
 @media only screen and (min-width: 200px) {
     .tweets {
         -moz-column-count: 1;
@@ -213,4 +214,8 @@ input[id^=deleteSearch_]{
     margin-left: 0px;
     position: relative;
     top: 2px;
+}
+input[id^=deleteTweet_]{
+     position: relative;
+     top: 11px;
 }
