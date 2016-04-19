@@ -34,6 +34,7 @@ def Search_view(request):
 				return redirect('Result',pk=search.pk)
 			else:
 				form = SearchForm()
+				Search.objects.filter(UserID=user).order_by("-id")[0].delete()
 				return render(request, 'webApp/search.html', {'form': form,'user':user,'searches':searches})
 			
 	else:
