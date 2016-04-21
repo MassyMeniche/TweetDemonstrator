@@ -4,8 +4,8 @@
     <div class='result-Container'> 
         <div class="tweets"> 
             {% for tweet in tweets %}
-            <div id='tweet_{{ forloop.counter }}'>
-                <input id='deletTweet_{{ forloop.counter }}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteTweet()">
+            <div id='tweet_{{ forloop.counter0 }}'>
+                <input id='deletTweet_{{forloop.counter0}}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteTweet()">
                     <blockquote class="twitter-tweet">
                         &mdash; 
                         <a href='{{tweet.getUrl}}'> </a>
