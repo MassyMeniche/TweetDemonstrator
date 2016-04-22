@@ -20,15 +20,30 @@ function toggleFields() {
     }
         
 }
-function deleteSearch(){
+
+function deleteSearch(url, crsfToken){
     var buttonId=event.target.id;
-    searchId='#search'.concat(buttonId.substr(12));
-    console.log(searchId)
+    PK=buttonId.substr(13)
+    searchId='#search_'.concat(PK);
     $(searchId).remove();
+    $.ajax({
+        url: url,
+        method: "POST",
+        headers: {'X-CSRFToken': crsfToken},
+        data: {searchPK:PK},
+        dataType: "json"
+    });
 }
-function deleteTweet(){
+function deleteTweet(url, crsfToken){
     var buttonId=event.target.id;
-    tweetId='#tweet'.concat(buttonId.substr(10));
-    console.log(tweetId)
+    tweetID=buttonId.substr(11)
+    tweetId='#tweet_'.concat(tweetID); 
     $(tweetId).remove();
+    $.ajax({
+        url: url,
+        method: "POST",
+        headers: {'X-CSRFToken': crsfToken},
+        data: {tweet:tweetID},
+        dataType: "json"
+    });
 }

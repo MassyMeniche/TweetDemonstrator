@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404 , redirect
 from .models import Search,RawTweet
 from .forms import SearchForm
+from django.http import HttpResponse
 
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.models import User
@@ -50,7 +51,7 @@ def Result_view(request,pk):
 	searches=Search.objects.filter(UserID=user).order_by("-id")[:10]
 	#_____________get the tweets associated with the last search___________________
 	alltweets=RawTweet.objects.filter(SearchID=search).order_by("-score")
-	tweets=selectTweets(alltweets,20)
+	tweets=selectTweets(alltweets,50)
 	#tweets=RawTweet.objects.filter(SearchID=search).order_by("-score")
 
 	return render(request,'webApp/result.html',{'tweets':tweets,'user':user,'searches':searches})
@@ -74,6 +75,21 @@ def user_logout_view(request):
 	logout(request)
 
 	return redirect('login')
+@login_required
+def deleteTweet_view(request):
+	if request.method =='POST':
+		tweetIDStr=request.POST['tweet']
+		tweetID=int(tweetIDStr)
+		RawTweet.objects.get(tweetID=tweetID).delete()
+	return HttpResponse(status = 200)
+@login_required	
+def deleteSearch_view(request):
+	if request.method =='POST':
+		searchIDStr=request.POST['searchPK']
+		searchID=int(searchIDStr)
+		Search.objects.get(pk=searchID).delete()
+	return HttpResponse(status = 200)
+
 #------------------------------------Algos-------------------------
 def searchTweets(search):
 	# Import the necessary methods from "twitter" library
@@ -87,15 +103,13 @@ def searchTweets(search):
 	#-----------------------------RegEx--------------------------------
 	MyRe=re.compile(r"(\w+)((\s|\sOR\s|\s-)(\w+))?$")
 	MyMatch=MyRe.match(KeywordsFieldValue)
-	print(MyMatch)
+
 	if MyMatch:
 		subStrings=MyMatch.groups()
-		print (subStrings)
+
 		if subStrings[3]!=None:
 			Keywords=[subStrings[0],subStrings[3]]
 			operator=subStrings[2]
-			print (Keywords)
-			print(operator)
 		else:
 			Keywords=[subStrings[0]]
 			operator=None
@@ -115,9 +129,9 @@ def searchTweets(search):
 	if search.activateLocation:
 		geo=geocoder.google(search.location).latlng
 		geocode=str(geo[0])+','+str(geo[0])+','+search.locationRadius
-		Tweets=twitter.search.tweets(q=KeywordsFieldValue,lang='fr',count=500,geocode=geocode)
+		Tweets=twitter.search.tweets(q=KeywordsFieldValue,lang='fr',count=100,geocode=geocode)
 	else:
-		Tweets=twitter.search.tweets(q=KeywordsFieldValue,lang='fr',count=500)
+		Tweets=twitter.search.tweets(q=KeywordsFieldValue,lang='fr',count=100)
 
 	for tweet in Tweets["statuses"]:
 		score=0
@@ -140,7 +154,7 @@ def searchTweets(search):
 		else:
 			images = 'No image'
 	
-		#---------- Scoring the tweet 
+		#---------- Scoring the tweets 
 		if operator!=None :
 			if operator==' -':
 				if text.find(Keywords[1])==-1 and text.find(Keywords[0])!=-1 :

@@ -161,6 +161,7 @@ hr {
 
 div[id^=tweet_] {
     display: inline-block;
+    float:left;
     padding: 0px;
     margin: 0px;
     width: 100%;

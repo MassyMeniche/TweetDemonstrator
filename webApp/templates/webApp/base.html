@@ -25,8 +25,8 @@
                 <div class='logout'> <div class='lougouttext'>historique des recherches</div></div>
             </br>
                 {% for s in searches%}
-                 <div id='search_{{forloop.counter0}}'>
-                    <input id='deleteSearch_{{forloop.counter0}}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteSearch()">
+                 <div id='search_{{s.pk}}'>
+                    <input id='deleteSearch_{{s.pk}}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteSearch('{%url 'deleteSearch' %}', '{{ csrf_token }}')">
 
                     <a href="{% url 'Result' pk=s.pk %}"> {{s}} </a>
                  </div>   
