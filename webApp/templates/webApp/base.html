@@ -13,20 +13,20 @@
         <div class="background-image"></div>
             <div class="ProfileContainer">
                 {% if user.is_authenticated %}
-                 <div class='logout'><img class='lougoutlogo' src="{% static 'pictures/profile.png' %}"> <div class='lougouttext'>{{user}}</div></div>
+                 <div class='logout'><img class='logoutlogo' src="{% static 'pictures/profile.png' %}"> <div class='logouttext'>{{user}}</div></div>
                 {% endif %}
                 <hr>
                 {% if user.is_authenticated %}
-                <a href="/logout"><div class='logout'><img class='lougoutlogo' src="{% static 'pictures/logout.png' %}"><div class='lougouttext'>Se déconnecter</div></div></a>
+                <a href="/logout"><div class='logout'><img class='logoutlogo' src="{% static 'pictures/logout.png' %}"><div class='logouttext'>Se déconnecter</div></div></a>
                 {% endif %}
                 <hr>
-                 <a href="/"><div class='logout'><img class='lougoutlogo' src="{% static 'pictures/search.png' %}"><div class='lougouttext'>Recherche</div></div></a>
+                 <a href="/"><div class='logout'><img class='logoutlogo' src="{% static 'pictures/search.png' %}"><div class='logouttext'>Recherche</div></div></a>
                  <hr>
-                <div class='logout'> <div class='lougouttext'>historique des recherches</div></div>
+                <div class='logout'> <div class='logouttext'>historique des recherches</div></div>
             </br>
                 {% for s in searches%}
                  <div id='search_{{s.pk}}'>
-                    <input id='deleteSearch_{{s.pk}}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteSearch('{%url 'deleteSearch' %}', '{{ csrf_token }}')">
+                    <input id='deleteSearch_{{s.pk}}' src="{% static 'pictures/interfaceRed.png' %}" type="image" onclick="deleteSearch('{%url 'deleteSearch' %}', '{{ csrf_token }}')">
 
                     <a href="{% url 'Result' pk=s.pk %}"> {{s}} </a>
                  </div>   
