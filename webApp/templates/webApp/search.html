@@ -1,19 +1,22 @@
 {% extends 'webApp/base.html' %}
 {% block content %}
-<div id="container">		
+
+<div id='legende'> 
+	<p>Utlisez les operateur -,OR,«» pour rafiner votre recherche </p>
+</div>	
+<div id="container">	
 	<form method="POST" class="search-form"> {% csrf_token %}
 		<div class="row">
-			  	<label class="nameoffield" for="field">Mots-clés*:</label> 
-			  	<br />
-			<input class="field" maxlength="100" name="keywords" type="text">
+			  	<label class="nameoffield" id='keywords' for="field">Mots-clés*:</label> 
+			  	<br/>
+			<input class="fieldKeywords"  maxlength="100" name="keywords" type="text">
 	    </div>
-	    <br >
+	    <br>
 	    <div class="rowOfActivateLocation">
 	    	<input id="id_activateLocation"  type="checkbox" name="activatelocation" >
-	    	<label class="headofAL" for="field">Activer la localisation</label>
-		    
+	    	<label class="headofAL" for="field">Activer la localisation</label>    
 	    </div>
-	    <br >
+	    <br>
     	<div id= 'location'>
 	        <label class="nameoffield" for="id_location">Lieu:</label>
 	       	<input class="field" maxlength="100" name="location" type="text">
@@ -29,9 +32,7 @@
 			<option value="5km">5Km</option>
 			<br >
 			</select>
-
 		</div>
-		
 	    <div class="recherche"><button type="submit" >Recherche</button></div>
 	</form>
 </div>
