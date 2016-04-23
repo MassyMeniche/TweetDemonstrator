@@ -5,7 +5,6 @@ $(document).ready(function () {
     $("#id_activateLocation").change(function () {
         toggleFields();
     });
-
 });
 //this toggles the visibility of our parent permission fields depending on the current selected value of the underAge field
 function toggleFields() {
@@ -17,10 +16,8 @@ function toggleFields() {
     else{
     	$("#location").hide();
     	$("#rowofraduis").hide();
-    }
-        
+    }       
 }
-
 function deleteSearch(url, crsfToken){
     var buttonId=event.target.id;
     PK=buttonId.substr(13)
