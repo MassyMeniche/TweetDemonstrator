@@ -101,7 +101,7 @@ def searchTweets(search):
 	#'''we can have a conflit her so we have to select the searches of a user and order them'''
 	KeywordsFieldValue=q.keywords
 	#-----------------------------RegEx--------------------------------
-	MyRe=re.compile(r"(\w+)((\s|\sOR\s|\s-)(\w+))?$")
+	MyRe=re.compile(r"([a-z\d\s\@\#\']+)+((\s|\sOR\s|\s-)([a-z\d\s\@\#\']+))?$")
 	MyMatch=MyRe.match(KeywordsFieldValue)
 
 	if MyMatch:

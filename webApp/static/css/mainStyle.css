@@ -39,14 +39,16 @@ background-size: cover;
     width:auto;
     height:auto;
   position: fixed;
-  top: 49%;
+  top: 60%;
   left: 77%;
   padding-left: 1em;
   padding-right: 1em;
       /* bring your own prefixes */
   transform: translate(-50%, -50%);
+  border-radius: 4px;
+  color : #16B188;
 
-    background-color:rgba(25,225,0,0.3) ;
+    background-color:rgba(66,66,66,0.5) ;
 
 }
 .SearchProfileContainer{
@@ -97,8 +99,9 @@ form.search-form{
   margin-bottom: 5px;
 } 
 .radiusmenu{
+  display: none;
     position: relative;
-    left: 4px;
+    left: 2em;
     top: 1px;
 }
 .logout{
