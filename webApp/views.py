@@ -101,20 +101,28 @@ def searchTweets(search):
 	#'''we can have a conflit her so we have to select the searches of a user and order them'''
 	KeywordsFieldValue=q.keywords
 	#-----------------------------RegEx--------------------------------
-	MyRe=re.compile(r"([a-z\d\s\@\#\']+)+((\s|\sOR\s|\s-)([a-z\d\s\@\#\']+))?$")
+	MyRe=re.compile(r"([A-Z]?[a-z\d\@\#\'\s]+)+(\s|\sOR\s|\s-)([A-Z]?[a-z\d\s\@\#\']+)?$")
+
 	MyMatch=MyRe.match(KeywordsFieldValue)
 
 	if MyMatch:
 		subStrings=MyMatch.groups()
 
-		if subStrings[3]!=None:
-			Keywords=[subStrings[0],subStrings[3]]
-			operator=subStrings[2]
+		if subStrings[2]!=None:
+			Keywords=[subStrings[0],subStrings[2]]
+			operator=subStrings[1]
 		else:
 			Keywords=[subStrings[0]]
 			operator=None
 	else:
-		return ("Search don't match MyRegEx")
+		MyCapRe=re.compile(r"([A-Z]+$)")
+		MyCapMatch=MyCapRe.match(KeywordsFieldValue)
+		if MyCapMatch:
+			subStrings=MyCapMatch.groups()
+			Keywords=[subStrings[0]]
+			operator=None
+		else:
+			return ("Search don't match MyRegEx")
 
 	#---------------------SEARCH-API connection------------------------------
 	ACCESS_TOKEN = '2732579483-CG9MLjyB6b51dPO8sG15H2ORJ1WcqxG7NBV6wON'
