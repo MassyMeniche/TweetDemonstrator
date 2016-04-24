@@ -65,10 +65,9 @@ def user_login_view(request):
 				login(request, user)
 				return redirect('Search')
 		else:
-			print ("Invalid login details")
-			return render(request, 'webApp/login.html')
+			return render(request, 'webApp/login.html', {'loginError':True,'POSTError':False})
 	else:
-		return render(request, 'webApp/login.html', {})
+		return render(request, 'webApp/login.html', {'POSTError':True,'loginError':False})
 @login_required
 def user_logout_view(request):
 

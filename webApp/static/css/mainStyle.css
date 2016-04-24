@@ -225,3 +225,29 @@ input[id^=deleteTweet_]{
      position: relative;
      top: 11px;
 }
+/*-----------------LOGIN -------*/
+.loginErrorMessage{
+  z-index: 2;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 20%;
+  left:50%;
+  border-radius: 4px;
+  color : #EF111A;
+  background-color:rgba(66,66,66,0.8) ;
+  display: flex;
+
+}
+.errorText{
+  text-align: center;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    padding-left: 3%;
+    padding-right: 1%;
+}
+img.loginErrorPhoto{
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 4%;
+}

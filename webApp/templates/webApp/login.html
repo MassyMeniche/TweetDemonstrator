@@ -7,9 +7,17 @@
 
     <body>
         <div class="background-image"></div>
+        {% if loginError %}
+        <div class='loginErrorMessage'>
+        <img class='loginErrorPhoto' src='../static/pictures/danger-3.png'>  
+        <div class='errorText'>Mot de passe ou Nom d'utilisateur incorect </div>
+        
+        </div>
+        {% endif %}
         <div id="container">  
             <form method="POST" class="search-form"  >
                 {% csrf_token %}
+                
                 <div class="row">
                    <label class="nameoffield" for="id_keywords">Nom d'utilisateur:</label>
 
