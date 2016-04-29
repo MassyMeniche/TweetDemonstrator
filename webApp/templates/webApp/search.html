@@ -1,10 +1,16 @@
 {% extends 'webApp/base.html' %}
 {% block content %}
 
+{% if RegExError %}
+        <div class='loginErrorMessage'>
+        <img class='loginErrorPhoto' src='../static/pictures/danger-3.png'>  
+        <div class='errorText'>Erreur dans l'utilisation des opérateurs </div>
+        </div>
+        {% endif %}
 <div id='legende'> 
 	<p>Utilisez les opérateurs -,OR pour raffiner votre recherche. <br><br>
-		Exemple:<br><br>
- - Inondation OR Brest : Contient Inondation ou Brest.<br>
+	Exemple:<br><br>
+ 	- Inondation OR Brest : Contient Inondation ou Brest.<br>
 	- Inondation -Brest : Contient inondation mais pas Brest. </p>
 </div>	
 <div id="container">	

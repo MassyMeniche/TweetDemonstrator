@@ -28,15 +28,17 @@ class RawTweet(models.Model):
 	isretweeted = models.NullBooleanField()
 	hashtags = models.CharField(max_length = 100)
 	score=models.IntegerField(default=0)
-	tagAsDeleted=models.BooleanField(default=False)
-
 	def __str__(self):
 		return self.pseudo+' le ' + self.date +' score '+ str(self.score)
 
 
 	def getUrl(self):
 		return ("https://twitter.com/{}/status/{}".format(self.pseudo,self.tweetID))
-
-	def tagAsDeleted(self):
-		self.tagAsDeleted=True
-		self.save()	
+ 
+class SelectedTweets(models.Model):
+	SearchID=models.ForeignKey(Search, on_delete=models.CASCADE,default=1)
+	tweetID = models.BigIntegerField(primary_key=True)
+	pseudo = models.CharField(max_length = 100)
+	score=models.IntegerField(default=0)
+	def getUrl(self):
+		return ("https://twitter.com/{}/status/{}".format(self.pseudo,self.tweetID))

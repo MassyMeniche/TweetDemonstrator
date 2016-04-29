@@ -7,5 +7,6 @@ urlpatterns=[
 	url(r'^logout', views.user_logout_view, name='logout'),
 	url(r'^deleteTweet',views.deleteTweet_view,name='deleteTweet'),
 	url(r'^deleteSearch',views.deleteSearch_view,name='deleteSearch'),
+	url(r'^error',views.error_view,name='error'),
 
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404 , redirect
-from .models import Search,RawTweet
+from .models import Search,RawTweet,SelectedTweets
 from .forms import SearchForm
 from django.http import HttpResponse
 
@@ -36,7 +36,7 @@ def Search_view(request):
 			else:
 				form = SearchForm()
 				Search.objects.filter(UserID=user).order_by("-id")[0].delete()
-				return render(request, 'webApp/search.html', {'form': form,'user':user,'searches':searches})
+				return render(request, 'webApp/search.html', {'form': form,'user':user,'searches':searches,'RegExError':True})
 			
 	else:
 		form = SearchForm()
@@ -51,9 +51,8 @@ def Result_view(request,pk):
 	searches=Search.objects.filter(UserID=user).order_by("-id")[:10]
 	#_____________get the tweets associated with the last search___________________
 	alltweets=RawTweet.objects.filter(SearchID=search).order_by("-score")
-	tweets=selectTweets(alltweets,50)
-	#tweets=RawTweet.objects.filter(SearchID=search).order_by("-score")
-
+	selectTweets(alltweets,50)
+	tweets=SelectedTweets.objects.filter(SearchID=search).order_by("-score")
 	return render(request,'webApp/result.html',{'tweets':tweets,'user':user,'searches':searches})
 def user_login_view(request):
 
@@ -65,9 +64,9 @@ def user_login_view(request):
 				login(request, user)
 				return redirect('Search')
 		else:
-			return render(request, 'webApp/login.html', {'loginError':True,'POSTError':False})
+			return render(request, 'webApp/login.html', {'loginError':True})
 	else:
-		return render(request, 'webApp/login.html', {'POSTError':True,'loginError':False})
+		return render(request, 'webApp/login.html', {})
 @login_required
 def user_logout_view(request):
 
@@ -79,7 +78,7 @@ def deleteTweet_view(request):
 	if request.method =='POST':
 		tweetIDStr=request.POST['tweet']
 		tweetID=int(tweetIDStr)
-		RawTweet.objects.get(tweetID=tweetID).delete()
+		SelectedTweets.objects.get(tweetID=tweetID).delete()
 	return HttpResponse(status = 200)
 @login_required	
 def deleteSearch_view(request):
@@ -89,6 +88,8 @@ def deleteSearch_view(request):
 		Search.objects.get(pk=searchID).delete()
 	return HttpResponse(status = 200)
 
+def error_view(request):
+	return render(request, 'webApp/error.html', {})
 #------------------------------------Algos-------------------------
 def searchTweets(search):
 	# Import the necessary methods from "twitter" library
@@ -100,7 +101,7 @@ def searchTweets(search):
 	#'''we can have a conflit her so we have to select the searches of a user and order them'''
 	KeywordsFieldValue=q.keywords
 	#-----------------------------RegEx--------------------------------
-	MyRe=re.compile(r"([A-Z]?[a-z\d\@\#\'\s]+)+(\s|\sOR\s|\s-)([A-Z]?[a-z\d\s\@\#\']+)?$")
+	MyRe=re.compile(r"([A-Z]?[a-z\d\@\#\'\s]+)+(\s|\sOR\s|\s-)?([A-Z]?[a-z\d\s\@\#\']+)?$")
 
 	MyMatch=MyRe.match(KeywordsFieldValue)
 
@@ -184,6 +185,8 @@ def searchTweets(search):
 		#------------Save tweet in database like an object
 		t=RawTweet(SearchID=search,tweetID=tweetID,date =date , text=text, pseudo=pseudo, userLocation=userLocation,tweetLocation=tweetLocation, images=images,isretweeted=isretweeted,hashtags=hashtags,score=score)
 		t.save()
+
+
 def selectTweets(allTweets,nbOfTweetsToReturn):
 	if len(allTweets)==0:
 		return ('no tweet found')
@@ -193,24 +196,29 @@ def selectTweets(allTweets,nbOfTweetsToReturn):
 
 		tweets = []
 		tweets.append(allTweets[0])
+		t=SelectedTweets(SearchID=allTweets[0].SearchID,tweetID=allTweets[0].tweetID,pseudo=allTweets[0].pseudo)
+		t.save()
 		nbOfTweets=1
 		i=1
 		maxi=len(allTweets)
 
 		while nbOfTweets<nbOfTweetsToReturn and i<maxi:
 			for t in tweets:
-				if t.images==allTweets[i].images :
+				if t.images==allTweets[i].images and t.score==allTweets[i].score :
 					isInSet=True
 					break
 				else:
 					isInSet=False
 			if not isInSet:
 				tweets.append(allTweets[i])
+				t=SelectedTweets(SearchID=allTweets[i].SearchID,tweetID=allTweets[i].tweetID,pseudo=allTweets[i].pseudo)
+				t.save()
 				nbOfTweets=len(tweets)
 				i=i+1
 			else:
 				i=i+1
-		return (tweets)
+		RawTweet.objects.filter(SearchID=allTweets[0].SearchID).delete()
+		tweets=[]
 
 
 
