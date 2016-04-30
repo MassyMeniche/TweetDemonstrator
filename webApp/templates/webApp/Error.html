@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% load staticfiles %}
+        <title>Error</title>
+        <style type="text/css">
+           .message{position: fixed;top: 40%;left: 50%;padding-left: 1em;padding-right: 1em; padding-bottom: 1em;padding-top: 1em;transform: translate(-50%, -50%);font-size: 32px;
+}
+           .Submessage{
+			  display: flex;
+           }
+           img.messageLogo{
+           	width: 80px;
+           	height: 80px;
+           }
+           p.messageText{
+           	padding-left: 1em;
+           }
+        </style>
+	</head>
+	<body> 
+
+		<div class='message'> 
+				<div class='Submessage'>
+					<img class='messageLogo' src="{% static 'pictures/error.png' %}">
+					<p class='messageText' >Ooops, une erreur est survenue.</p>
+
+				</div>
+		</div>
+
+
+	</body> 
+</html>
