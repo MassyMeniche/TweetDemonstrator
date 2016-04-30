@@ -31,7 +31,7 @@ def Search_view(request):
 				search.save()
 			#------------------Check if the search was ok----------------	
 			s=searchTweets(search)
-			if s!="Search don't match MyRegEx":
+			if s!=False:
 				return redirect('Result',pk=search.pk)
 			else:
 				form = SearchForm()
@@ -91,6 +91,8 @@ def deleteSearch_view(request):
 def error_view(request):
 	return render(request, 'webApp/error.html', {})
 #------------------------------------Algos-------------------------
+
+
 def searchTweets(search):
 	# Import the necessary methods from "twitter" library
 	from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
@@ -101,28 +103,25 @@ def searchTweets(search):
 	#'''we can have a conflit her so we have to select the searches of a user and order them'''
 	KeywordsFieldValue=q.keywords
 	#-----------------------------RegEx--------------------------------
-	MyRe=re.compile(r"([A-Z]?[a-z\d\@\#\'\s]+)+(\s|\sOR\s|\s-)?([A-Z]?[a-z\d\s\@\#\']+)?$")
-
+	MyRe=re.compile(r"((.+)( OR | -)(.+))|([\w #'@]+)")
 	MyMatch=MyRe.match(KeywordsFieldValue)
 
 	if MyMatch:
 		subStrings=MyMatch.groups()
-
-		if subStrings[2]!=None:
-			Keywords=[subStrings[0],subStrings[2]]
-			operator=subStrings[1]
-		else:
-			Keywords=[subStrings[0]]
+		print (subStrings)
+		if subStrings[4]!=None:
+			Keywords=[subStrings[4]]
 			operator=None
+			print (Keywords)
+		else:
+			Keywords=[subStrings[1],subStrings[3]]
+			print (Keywords)
+			operator=subStrings[2]
+			print (operator)
 	else:
-		MyCapRe=re.compile(r"([A-Z]+$)")
-		MyCapMatch=MyCapRe.match(KeywordsFieldValue)
-		if MyCapMatch:
-			subStrings=MyCapMatch.groups()
-			Keywords=[subStrings[0]]
-			operator=None
-		else:
-			return ("Search don't match MyRegEx")
+	#---------- False stands for of Search don't match MyRegEx---------------
+			return (False)
+
 
 	#---------------------SEARCH-API connection------------------------------
 	ACCESS_TOKEN = '2732579483-CG9MLjyB6b51dPO8sG15H2ORJ1WcqxG7NBV6wON'
@@ -163,24 +162,21 @@ def searchTweets(search):
 			images = 'No image'
 	
 		#---------- Scoring the tweets 
-		if operator!=None :
-			if operator==' -':
-				if text.find(Keywords[1])==-1 and text.find(Keywords[0])!=-1 :
-					score+=7
-			elif operator==' OR ':
-				if text.find(Keywords[0])!=-1 or text.find(Keywords[1])!=-1 :
-					score+=7
-			else :
-				if text.find(Keywords[0])!=-1 and text.find(Keywords[1])!=-1:
-					score+=7
-				if text.find(Keywords[0])==-1 or text.find(Keywords[1])==-1:
-					score+=4
+		if (operator!=None) :
+			if(operator==' -'):
+				if(text.find(Keywords[1])==-1 and text.find(Keywords[0])!=-1) :
+					score+=5
+			else:
+				if(text.find(Keywords[0])!=-1):
+					score+=2
+				if(text.find(Keywords[1])!=-1):
+					score+=2
 		else:
-			if text.find(Keywords[0])!=-1:
-				score+=7
-		if isretweeted == False and tweetLocation != None :
+			if(text.find(Keywords[0])!=-1):
+				score+=6
+		if (isretweeted == False and tweetLocation != None) :
 			score+=10
-		if images!= 'No image':
+		if (images!= 'No image'):
 			score+=3
 		#------------Save tweet in database like an object
 		t=RawTweet(SearchID=search,tweetID=tweetID,date =date , text=text, pseudo=pseudo, userLocation=userLocation,tweetLocation=tweetLocation, images=images,isretweeted=isretweeted,hashtags=hashtags,score=score)
@@ -211,7 +207,7 @@ def selectTweets(allTweets,nbOfTweetsToReturn):
 					isInSet=False
 			if not isInSet:
 				tweets.append(allTweets[i])
-				t=SelectedTweets(SearchID=allTweets[i].SearchID,tweetID=allTweets[i].tweetID,pseudo=allTweets[i].pseudo)
+				t=SelectedTweets(SearchID=allTweets[i].SearchID,tweetID=allTweets[i].tweetID,pseudo=allTweets[i].pseudo,score=allTweets[i].score)
 				t.save()
 				nbOfTweets=len(tweets)
 				i=i+1

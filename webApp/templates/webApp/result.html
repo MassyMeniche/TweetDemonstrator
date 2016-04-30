@@ -6,6 +6,7 @@
             {% for tweet in tweets %}
             <div id='tweet_{{ tweet.tweetID }}'>
                 <input id='deletTweet_{{tweet.tweetID}}' src="{% static 'pictures/interface.png' %}" type="image" onclick="deleteTweet('{%url 'deleteTweet' %}', '{{ csrf_token }}')">
+                    {{ tweet.score}}
                     <blockquote class="twitter-tweet">
                         &mdash; 
                         <a href='{{tweet.getUrl}}'> </a>
