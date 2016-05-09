@@ -32,6 +32,7 @@ background-size: cover;
     border-width: 1px;
     background-color:rgba(0,126,255,0.3) ;
     border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
 #legende{
@@ -58,6 +59,7 @@ background-size: cover;
   position: fixed;
   top: 10%;
   left: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 form.search-form{
@@ -161,7 +163,8 @@ hr {
     transform: translateY(-50%);
   top: 50%;
   left: 20px;
-  background-color: rgba(0,126,255,0.2)
+  background-color: rgba(0,126,255,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .tweets {
